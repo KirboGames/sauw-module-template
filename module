@@ -1,6 +1,15 @@
 #!/bin/bash
 
-if [ "$1" = "build" ]
-then
-    mkdir build
+if [ "$1" = "build" ]; then
+  mkdir build
+  echo "" >build/build.js
+  search_dir=src
+  for entry in "$search_dir"/*; do
+    echo "//file $entry" >>build/build.js
+    code="$(cat "$entry")"
+    echo "$code" >>build/build.js
+  done
+  cp build/build.js $HOME/S.A.U.W./Modules/test.js
+elif [ "$2" = "release" ]; then
+  mkdir release
 fi
