@@ -1,15 +1,26 @@
 #!/bin/bash
 
-if [ "$1" = "build" ]; then
-  mkdir build
+build() {
+  mkdir -p build
   echo "" >build/build.js
   search_dir=src
   for entry in "$search_dir"/*; do
     echo "//file $entry" >>build/build.js
-    code="$(cat "$entry")"
-    echo "$code" >>build/build.js
+    while IFS= read -r line; do
+      echo "$line" >>build/build.js
+    done <"$entry"
   done
-  cp build/build.js $HOME/S.A.U.W./Modules/test.js
-elif [ "$2" = "release" ]; then
-  mkdir release
+  echo "successful build"
+}
+
+release() {
+  mkdir -p release
+  build
+}
+
+if [ "$1" = "build" ]; then
+  build
+  cp build/build.js ~/S.A.U.W./Modules/test.js
+elif [ "$1" = "release" ]; then
+  release
 fi
