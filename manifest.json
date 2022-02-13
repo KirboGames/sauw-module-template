@@ -1,4 +1,5 @@
 {
   "name": "ModuleName",
+  "code_version": 1,
   "executable": true
 }
