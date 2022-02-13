@@ -1,5 +1,6 @@
 #!/bin/bash
 buildjs=build/build.js
+version=$(cat version)
 
 build() {
   mkdir -p build
@@ -27,7 +28,8 @@ release() {
 
 if [ "$1" = "build" ]; then
   build
-  cp build/build.js ~/S.A.U.W./Modules/test.js
+  cp $buildjs ~/S.A.U.W./Modules/test.js
 elif [ "$1" = "release" ]; then
   release
+  cp $buildjs "release/$version.js"
 fi
