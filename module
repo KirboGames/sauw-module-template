@@ -1,16 +1,23 @@
 #!/bin/bash
+buildjs=build/build.js
 
 build() {
   mkdir -p build
-  echo "" >build/build.js
+  manifest
   search_dir=src
   for entry in "$search_dir"/*; do
-    echo "//file $entry" >>build/build.js
+    echo "//file $entry" >>$buildjs
     while IFS= read -r line; do
-      echo "$line" >>build/build.js
+      echo "$line" >>$buildjs
     done <"$entry"
   done
   echo "successful build"
+}
+
+manifest() {
+  printf "MODULE(" >$buildjs
+  cat manifest.json >>$buildjs
+  echo ");" >>$buildjs
 }
 
 release() {
